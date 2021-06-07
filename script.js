@@ -24,6 +24,7 @@ For save_file:
 */
 
 var json_textarea = null;
+var message_element = null;
 
 function open_file(){
 
@@ -33,8 +34,13 @@ function save_file(){
 
 }
 
+function write_message(m){
+    message_element.innerHTML = m;
+}
+
 onload = function(){
     document.getElementById("open_file").onclick = open_file;
     document.getElementById("save_file").onclick = save_file;
     json_textarea = document.getElementById("json_textarea");
+    message_element = document.getElementById("message_element");
 }
