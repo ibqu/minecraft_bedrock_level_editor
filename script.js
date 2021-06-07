@@ -72,7 +72,7 @@ async function open_file() {
 
     json_textarea.innerHTML = JSON.stringify(obj, null, 2);
 
-    write_message("Success!");
+    write_message("Successfully loaded file");
 }
 
 async function save_file() {
@@ -103,7 +103,7 @@ async function save_file() {
     try {
         writable_stream.write(blob);
         writable_stream.close();
-        write_message("Success!")
+        write_message("Successfully saved file")
     } catch (e) {
         writable_stream.close();
         write_message("Failed to write to level file");

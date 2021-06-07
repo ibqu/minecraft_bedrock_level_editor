@@ -151,7 +151,7 @@ function obj2buf(obj) {
 
     //set the file length part
     scratchpad.setUint32(0, bytes.length - 8, true);
-    for(var i = 0; i < 4; ++i){
+    for (var i = 0; i < 4; ++i) {
         bytes[i + 4] = scratch_bytes[i];
     }
 
