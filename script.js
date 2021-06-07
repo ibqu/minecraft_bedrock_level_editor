@@ -21,6 +21,10 @@ For save_file:
     TRY to write the arraybuffer contents to the file
 
     Indicate that saving the file was successful
+
+Note:
+Dealing only with ASCII characters is good enough at the moment.
+It will probably not be necessary to deal with the subtleties of UTF-8 (Minecraft) and UTF-16 (Javascript).
 */
 
 var json_textarea = null;
