@@ -77,7 +77,6 @@ function obj2buf(obj) {
     }
 
     function write_chars(a) {
-        scratchpad.setUint8(0, a.charCodeAt(0), true);
         for (var i = 0; i < a.length; ++i) {
             bytes.push(a.charCodeAt(i));
         }
