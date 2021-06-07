@@ -26,11 +26,32 @@ For save_file:
 var json_textarea = null;
 var message_element = null;
 
-function open_file(){
+async function open_file(){
+    try{
+        var [file_handle] = await showOpenFilePicker();
+    }catch(e){
+        write_message("Failed to select file to open");
+        return;
+    }
 
+    try{
+        var file = await file_handle.getFile();
+    }catch(e){
+        write_message("Failed to read file");
+        return;
+    }
+
+    try{
+        var buffer = await file.arrayBuffer();
+    }catch(e){
+        write_message("Failed to read file as ArrayBuffer");
+        return;
+    }
+
+    
 }
 
-function save_file(){
+async function save_file(){
 
 }
 
