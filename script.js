@@ -64,7 +64,7 @@ async function open_file() {
         return;
     }
 
-    json_textarea.innerHTML = JSON.stringify(obj, null, 4);
+    json_textarea.innerHTML = JSON.stringify(obj, null, 2);
 
     write_message("Success!");
 }
@@ -76,7 +76,7 @@ async function save_file() {
 function buf2obj(input_buffer) {
 
     //buffer containing decompressed data
-    var buffer = input_buffer.slice(11, input_buffer.byteLength);
+    var buffer = input_buffer.slice(8, input_buffer.byteLength);
     var buffer_length = buffer.byteLength;
     var view = new DataView(buffer);
     var pos = 0;
