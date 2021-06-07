@@ -113,7 +113,6 @@ function obj2buf(obj) {
             }
         },
         "10": function (tags) {
-            write_int32(tags.length);
             for (var i = 0; i < tags.length; ++i) {
                 var entry_id = type_ids[tags[i].type];
                 write_id_and_name(entry_id, tags[i].name);
@@ -123,6 +122,7 @@ function obj2buf(obj) {
                     nameless_writers[entry_id](tags[i]);
                 }
             }
+            write_uint8(0);
         },
         "11": function (array) {
             write_int32(array.length);
