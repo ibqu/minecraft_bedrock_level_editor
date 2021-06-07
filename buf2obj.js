@@ -2,7 +2,7 @@ function buf2obj(buffer) {
     var view = new DataView(buffer);
     var buffer_length = buffer.byteLength;
     var pos = 0;
-    
+
     //get the level.dat version number
     var version_number = view.getUint32(pos, true);
     pos += 4;
@@ -58,8 +58,6 @@ function buf2obj(buffer) {
             var id = get_id();
             var length = view.getInt32(pos, true);
             pos += 4;
-            if (id === 0 && length > 0)
-                throw new Error("Invalid list");
             var entry = { "id": id };
             var value = entry.value = [];
             for (var i = 0; i < length; ++i) {
