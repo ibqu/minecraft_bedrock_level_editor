@@ -144,4 +144,17 @@ function obj2buf(obj) {
     //put in a placeholder for the file size
     write_uint32(0);
 
+    //put in all of the tags
+    nameless_writers(obj["data"])
+    //remove the end tag added by this function
+    bytes.pop();
+
+    //set the file length part
+    scratchpad.setUint32(0, bytes.length - 8, true);
+    for(var i = 0; i < 4; ++i){
+        bytes[i + 4] = scratchpad[i];
+    }
+
+    //return an arraybuffer
+    return (new Uint8Array(bytes)).buffer
 }
