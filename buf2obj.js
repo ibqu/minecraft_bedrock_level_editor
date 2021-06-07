@@ -1,10 +1,13 @@
-function buf2obj(input_buffer) {
-
-    //buffer containing decompressed data
-    var buffer = input_buffer.slice(8, input_buffer.byteLength);
-    var buffer_length = buffer.byteLength;
+function buf2obj(buffer) {
     var view = new DataView(buffer);
+    var buffer_length = buffer.byteLength;
     var pos = 0;
+    
+    //get the level.dat version number
+    var version_number = view.getUint32(pos, true);
+    pos += 4;
+    //skip the number indicating the length of the file's body
+    pos += 4;
 
     function get_id() {
         var id = view.getUint8(pos, true);
@@ -56,7 +59,7 @@ function buf2obj(input_buffer) {
             var length = view.getInt32(pos, true);
             pos += 4;
             if (id === 0 && length > 0)
-                throw new Error("List of end tags found");
+                throw new Error("Invalid list");
             var entry = { "id": id };
             var value = entry.value = [];
             for (var i = 0; i < length; ++i) {
@@ -117,5 +120,7 @@ function buf2obj(input_buffer) {
         value.push(entry);
     }
 
-    return value;
+    var obj = { "version": version_number, "data": value };
+
+    return obj;
 }
