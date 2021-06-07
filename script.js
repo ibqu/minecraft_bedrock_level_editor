@@ -64,7 +64,7 @@ async function open_file() {
     try {
         var obj = buf2obj(buffer);
     } catch (e) {
-        write_message("Failed to parse level editor");
+        write_message("Failed to parse level file");
         return;
     }
 
