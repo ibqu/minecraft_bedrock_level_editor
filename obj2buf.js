@@ -109,7 +109,7 @@ function obj2buf(obj) {
             write_uint8(list_obj.id);
             write_int32(list_obj.value.length);
             for (var i = 0; i < list_obj.value.length; ++i) {
-                nameless_writers[id](list_obj.value[i]);
+                nameless_writers[list_obj.id](list_obj.value[i]);
             }
         },
         "10": function (tags) {
@@ -145,14 +145,14 @@ function obj2buf(obj) {
     write_uint32(0);
 
     //put in all of the tags
-    nameless_writers(obj["data"])
+    nameless_writers["10"](obj["data"])
     //remove the end tag added by this function
     bytes.pop();
 
     //set the file length part
     scratchpad.setUint32(0, bytes.length - 8, true);
     for(var i = 0; i < 4; ++i){
-        bytes[i + 4] = scratchpad[i];
+        bytes[i + 4] = scratch_bytes[i];
     }
 
     //return an arraybuffer

@@ -30,18 +30,20 @@ It will probably not be necessary to deal with the subtleties of UTF-8 (Minecraf
 var json_textarea = null;
 var message_element = null;
 
+const file_picker_options = {
+    "types": [
+        {
+            "description": "DAT files",
+            "accept": {
+                "d/at": [".dat"]
+            }
+        }
+    ]
+};
+
 async function open_file() {
     try {
-        var [file_handle] = await showOpenFilePicker({
-            "types": [
-                {
-                    "description": "DAT files",
-                    "accept": {
-                        "d/at": [".dat"]
-                    }
-                }
-            ]
-        });
+        var [file_handle] = await showOpenFilePicker(file_picker_options);
     } catch (e) {
         write_message("Failed to select file to open");
         return;
@@ -74,7 +76,38 @@ async function open_file() {
 }
 
 async function save_file() {
+    try {
+        var file_handle = await showSaveFilePicker(file_picker_options)
+    } catch (e) {
+        write_message("Failed to select file to write to");
+        return;
+    }
 
+    try {
+        var writable_stream = await file_handle.createWritable();
+    } catch (e) {
+        write_message("Failed to open file for writing");
+        return;
+    }
+
+    try {
+        var obj = JSON.parse(json_textarea.value);
+        var buffer = obj2buf(obj);
+    } catch (e) {
+        write_message("Failed to parse new level data");
+        return;
+    }
+
+    var blob = new Blob([buffer]);
+
+    try {
+        writable_stream.write(blob);
+        writable_stream.close();
+        write_message("Success!")
+    } catch (e) {
+        writable_stream.close();
+        write_message("Failed to write to level file");
+    }
 }
 
 function write_message(m) {
