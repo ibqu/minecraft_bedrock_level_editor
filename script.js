@@ -70,7 +70,7 @@ async function open_file() {
         return;
     }
 
-    json_textarea.innerHTML = JSON.stringify(obj, null, 2);
+    json_textarea.value = JSON.stringify(obj, null, 2);
 
     write_message("Successfully loaded file");
 }
